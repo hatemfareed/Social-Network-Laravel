@@ -15,10 +15,13 @@ class PostsController extends Controller
 {
     public function index()
     {
+        $profile = auth()->user()->profile;
+        
         $posts = Post::all();
         $users = User::all();
+
         return view('Books.book-page')
-        ->with(['posts' => $posts , 'users'=>$users]);
+        ->with(['posts' => $posts , 'users'=>$users ,$profile => 'profile']);
     }
     public function show($id)
     {

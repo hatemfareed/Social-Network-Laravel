@@ -13,6 +13,10 @@ use App\Models\Like;
 use App\Models\Group;
 use App\Models\GroupUser;
 use App\Models\Comment;
+use App\Models\Profile;
+
+use Illuminate\Database\Eloquent\Model;
+
 
 class User extends Authenticatable
 {
@@ -26,7 +30,6 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-
         'provider',
         'provider_id',
         'provider_token',
@@ -61,6 +64,10 @@ class User extends Authenticatable
         return Crypt::decryptString($value);
     }
 
+    public function getAvatarAttribute()
+    {
+        return 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($this->email))) . '?s=200';
+    }
 
     public function groups()
     {
@@ -77,6 +84,10 @@ class User extends Authenticatable
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
     }
 
 }

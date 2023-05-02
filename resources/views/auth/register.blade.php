@@ -15,7 +15,7 @@
           <div class="log-box-style">
             <h1 class="log-title">إنشاء حساب</h1>
             <form class="log-form" action="">
-                <a href="" class="log-btn facebook-btn">
+                {{-- <a href="" class="log-btn facebook-btn">
                   <span>التسجيل باستخدام فيسبوك</span>
                   <svg>
                     <use href="{{ asset('/assets/images/icons/icons.svg#facebook') }}"></use>
@@ -26,7 +26,19 @@
                   <svg>
                     <use href="{{ asset('/assets/images/icons/icons.svg#google') }}"></use>
                   </svg>
-                </a>
+                </a> --}}
+                <button type="submit" formaction="{{ route('auth.socilaite.redirect','facebook') }}" class="button log-btn facebook-btn">
+                  <span>الدخول باستخدام فيسبوك</span>
+                  <svg>
+                    <use href="{{ asset('/assets/images/icons/icons.svg#facebook') }}"></use>
+                  </svg>
+                </button>
+                <button type="submit" formaction="{{ route('auth.socilaite.redirect','google') }}" class="button log-btn google-btn">
+                  <span>الدخول باستخدام جوجل</span>
+                  <svg>
+                    <use href="{{ asset('/assets/images/icons/icons.svg#google') }}"></use>
+                  </svg>
+                </button>
                 <div class="account-exist d-flex align-items-center gap-2">
                   <p class="account-q m-0">هل لديك حساب ؟</p><a class="goto-account" href="{{ route('login') }}">تسجيل الدخول </a>
                 </div>

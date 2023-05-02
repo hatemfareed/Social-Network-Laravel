@@ -23,8 +23,9 @@ class GroupsController extends Controller
     {
         $posts = $group->posts;
         $users = $group->users;
+        $profile = auth()->user()->profile;
         return view('Books.book-page')
-        ->with(['posts' => $posts , 'users'=>$users , 'group'=>$group]);   
+        ->with(['posts' => $posts , 'users'=>$users , 'group'=>$group , 'profile' => $profile]);   
     }
 
     public function store(Request $request)
@@ -146,9 +147,9 @@ class GroupsController extends Controller
         $number_of_users = $group->users->count();
 
         // return response()->json(['data' => $admins_name], 202);
-
+        $profile = auth()->user()->profile;
         return view('books.book-member')
-        ->with(['admins_name' => $admins_name , 'group' => $group , 'members_name' => $members_name , 'number_of_users'=>$number_of_users ]);
+        ->with(['admins_name' => $admins_name , 'group' => $group , 'members_name' => $members_name , 'number_of_users'=>$number_of_users , 'profile' => $profile ]);
         
     }
     public function about(Group $group)
@@ -163,7 +164,8 @@ class GroupsController extends Controller
         }
         $number_of_members = $group->users->count();
         $users = $group->users;
+        $profile = auth()->user()->profile;
         return view('books.book-about')
-        ->with(['group' => $group , 'users' => $users , 'admins_name'=>$admins_name , 'members'=>$number_of_members]);
+        ->with(['group' => $group , 'users' => $users , 'admins_name'=>$admins_name , 'members'=>$number_of_members , 'profile' => $profile]);
     }
 }

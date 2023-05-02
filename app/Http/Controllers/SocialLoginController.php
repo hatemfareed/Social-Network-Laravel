@@ -47,11 +47,14 @@ class SocialLoginController extends Controller
                     'provider_token' => $provider_user->token,
                 ]);
             }
-            
+            // create profile for user
+            $user->profile()->create([
+                'user_id' => $user->id,
+            ]) ;
 
             Auth::login($user);
 
-            return redirect()->route('profile');
+            return redirect()->route('home');
         } catch (Throwable $e) {
             return redirect()->route('login')->withErrors([
                 'email' => $e->getMessage(),

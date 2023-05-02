@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="icon" type="image/x-icon" href="/assets/images/favIcon.png">
+    <link rel="icon" type="image/x-icon" href="{{asset('assets/images/favIcon.png')}}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.rtl.min.css" integrity="sha384-DOXMLfHhQkvFFp+rWTZwVlPVqdIhpDVYT9csOnHSgWQWPX0v5MCGtjCJbY6ERspU" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
@@ -32,11 +32,18 @@
                 </div>
               </nav>
               <ul class="navbar-nav mb-2 mb-lg-0 navbar-absolute">
-                <li class="nav-item dropdown bootstrap-things profile-icon-box"><a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img class="profile-icon" src="/assets/images/mohammed.jpg" alt="profile icon"></a>
+                <li class="nav-item dropdown bootstrap-things profile-icon-box">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    @if ($profile->image != null)
+                    <img class="profile-icon" src="/profile-images/{{$profile->image}}" alt="profile icon">
+                    @else
+                    <img class="profile-icon" src="../assets/images/profileImg.png" alt="profile icon">
+                    @endif
+                    </a>
                   <ul class="dropdown-menu">
                     <li><a class="dropdown-item log-link" href="{{ route('profile') }}"><span>الملف الشخصي </span>
                         <svg>
-                          <use href="/assets/images/icons/icons.svg#profile"></use>
+                          <use href="{{asset('assets/images/icons/icons.svg#profile')}}"></use>
                         </svg></a></li>
                     <li><a class="dropdown-item log-link" href="{{ route('logout') }}"><span>تسجيل الخروج </span>
                         <svg>
@@ -79,7 +86,7 @@
               <div class="layout"></div><img class="profile-cover-img" src="../assets/images/heroBG.jpg" alt="Profile Cover Img">
               <button class="change-cover" type="button">
                 <svg> 
-                  <use href="assets/images/icons/icons.svg#Camera"></use>
+                  <use href="{{asset('assets/images/icons/icons.svg#Camera')}}"></use>
                 </svg><span>تعديل صورة الغلاف</span>
               </button>
             </div>
@@ -87,89 +94,33 @@
           <div class="profile-top-section-content">
             <div class="container">
               <div class="profile-info-box">
-                <div class="profile-photo-box"> <img src="../assets/images/profilePhoto.webp" alt="Profile Photo">
+                
+                <form action="/store/{{$profile->id}}" method = 'POST' enctype="multipart/form-data" >
+                  @csrf
+                <div class="profile-photo-box">
+                  @if ($profile->image != null)
+                   <img src="/profile-images/{{$profile->image}}" alt="Profile Photo">
+                  @else
+                  <img src="../assets/images/profileImg.png" alt="Profile Photo">
+                  @endif
                   <label class="change-profile-photo" for="profilePhoto"> 
-                    <input id="profilePhoto" type="file" accept="image/*">
+                    <input id="profilePhoto" name='profilePhoto' type="file" accept="image/*" onchange="this.form.submit();">
                     <svg> 
-                      <use href="assets/images/icons/icons.svg#Camera"></use>
+                      <use href="{{asset('assets/images/icons/icons.svg#Camera')}}"></use>
                     </svg>
                   </label>
                 </div>
-                <div class="profile-links-box">
-                  <h2 class="parson-name">{{$user->name}}</h2>
-                  <ul>
-                    <li class="profile-type-link"><a href="../profile-info.html">بيانات الحساب</a></li>
-                  </ul>
-                </div>
+              </form>
+                
+                @yield('profile-info-active')
+                
               </div>
             </div>
           </div>
         </section>
-        <section class="profile-info-section main-padding"> 
-          <div class="container"> 
-            <div class="profile-info-container"> 
-              <div class="profile-info-box"> 
-                <p class="profile-info-title">نبذة مختصرة </p>
-                <p class="profile-info-text">مرحبا بكم أنا مالك أحب القراءة ومطالعة الكتب, واتطلع لبناء المزيد من المعرفة والعلاقات وأود أن اشارككم في مناقشة المواضيع الهامة بالنسبة لي.  مرحبا بكم أنا مالك أحب القراءة ومطالعة الكتب, واتطلع لبناء المزيد من المعرفة والعلاقات وأود أن اشارككم في مناقشة المواضيع الهامة بالنسبة لي.</p>
-              </div>
-            </div>
-            <div class="profile-info-container"> 
-              <div class="profile-info-box"> 
-                <p class="profile-info-title">الاهتمامات </p>
-                <p class="profile-info-text">أهتم بعدة مواضيع في القراءة, خصوصاََ السياسة والدين, في حين ان قرائتي لمجال علوم الأرض يقتصر على المجلات والمقالات السريعة. أهتم بعدة مواضيع في القراءة, خصوصاََ السياسة والدين, في حين ان قرائتي لمجال علوم الأرض يقتصر على المجلات والمقالات السريعة. أهتم بعدة مواضيع في القراءة, خصوصاََ السياسة والدين, في حين ان قرائتي لمجال علوم الأرض يقتصر على المجلات والمقالات السريعة.</p>
-              </div>
-            </div>
-            <div class="profile-info-container"> 
-              
-              <div class="profile-info-box"> 
-                <p class="profile-info-title">الكتب المُنشأة </p>
-                <div class="books-in-profile-box"> 
-                  <div class="swiper mySwiper">
-                    <div class="swiper-wrapper">
-                      @foreach($user['groups'] as $group)
-                      @if ($group->pivot->group_user_role == "admin")
-                        <div class="swiper-slide">
-                          <div class="col"><a class="card customized-card" href="/book-page/{{$group->id}}">
-                              <div class="card-img-box"><img class="card-img-top" src="/images/{{$group->image}}" alt="art"></div>
-                              <div class="card-body">
-                                <h5 class="card-title">{{$group->name}}</h5>
-                              </div></a></div>
-                        </div>
-                      @endif
-                      @endforeach
-                    </div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="profile-info-container"> 
-              <div class="profile-info-box"> 
-                <p class="profile-info-title">الكتب المُنضم لها </p>
-                <div class="books-in-profile-box"> 
-                  <div class="swiper mySwiper">
-                    <div class="swiper-wrapper">
-                      @foreach ($user["groups"] as $group)
-                      @if ($group->pivot->group_user_role == "member")
-                        <div class="swiper-slide">
-                          <div class="col"><a class="card customized-card" href="/book-page/{{$group->id}}">
-                              <div class="card-img-box"><img class="card-img-top" src="/images/{{$group->image}}" alt="art"></div>
-                              <div class="card-body">
-                                <h5 class="card-title">{{$group->name}}</h5>
-                              </div></a></div>
-                        </div>
-                      @endif
-                      @endforeach
-                    </div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+
+        @yield('content')
+
       </main>
     </div>
     <div class="footer-box">

@@ -14,7 +14,7 @@
         <div class="log-box">
           <div class="log-box-style">
             <h1 class="log-title">تسجيل الدخول</h1>
-            <form class="log-form" action="">
+            {{-- <form class="log-form" action="">
                 <a href="{{ route('auth.socilaite.redirect','facebook') }}" class=" button log-btn facebook-btn">
                   <span>الدخول باستخدام فيسبوك</span>
                   <svg>
@@ -27,8 +27,22 @@
                     <use href="{{ asset('/assets/images/icons/icons.svg#google') }}"></use>
                   </svg>
                 </a>
-
+              </form> --}}
+              <form class="log-form" action="">
+                <button type="submit" formaction="{{ route('auth.socilaite.redirect','facebook') }}" class="button log-btn facebook-btn">
+                  <span>الدخول باستخدام فيسبوك</span>
+                  <svg>
+                    <use href="{{ asset('/assets/images/icons/icons.svg#facebook') }}"></use>
+                  </svg>
+                </button>
+                <button type="submit" formaction="{{ route('auth.socilaite.redirect','google') }}" class="button log-btn google-btn">
+                  <span>الدخول باستخدام جوجل</span>
+                  <svg>
+                    <use href="{{ asset('/assets/images/icons/icons.svg#google') }}"></use>
+                  </svg>
+                </button>
               </form>
+                                       
           </div>
         </div>
         <div class="log-bg"> <img class="log-bg-img" src="{{asset('/assets/images/log-bg.jpg')}}" alt="Bg"></div>

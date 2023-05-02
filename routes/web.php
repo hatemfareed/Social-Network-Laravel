@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SocialLoginController;
-use App\Http\Controllers\ControllerProfile;
+use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\Groups\GroupsController;
 use App\Http\Controllers\Posts\PostsController;
 use App\Http\Controllers\Posts\CommentsController ;
@@ -25,7 +25,7 @@ use App\Http\Controllers\TestLog;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->middleware(['auth'])->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -43,8 +43,10 @@ Route::get('/test',[TestLog::class ,'testuser'])->middleware('auth');
 Route::get('/logout', [SocialLoginController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/profile', [ControllerProfile::class , 'index'])->name('profile');
-    Route::get('/profile/{user}', [ControllerProfile::class , 'show']);
+    Route::get('/profile', [ProfilesController::class , 'index'])->name('profile');
+    Route::get('/profile/{user}', [ProfilesController::class , 'show']);
+    Route::get('/profile-info/{user}', [ProfilesController::class , 'show_info']);
+    Route::post('/store/{profile}', [ProfilesController::class , 'store_image']);
 });
 
 Route::middleware(['auth'])->group(function () {
