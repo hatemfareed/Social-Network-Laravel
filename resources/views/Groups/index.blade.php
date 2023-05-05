@@ -44,7 +44,7 @@
         <ul class="navbar-nav mb-2 mb-lg-0 navbar-absolute">
           <li class="nav-item dropdown bootstrap-things profile-icon-box"><a class="nav-link dropdown-toggle" href="#"
               role="button" data-bs-toggle="dropdown" aria-expanded="false"><img class="profile-icon"
-                src="/assets/images/mohammed.jpg" alt="profile icon"></a>
+                src="/profile-images/{{$profile->image}}" alt="profile icon"></a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item log-link" href="../../profile.html"><span>الملف الشخصي </span>
                   <svg>
@@ -263,6 +263,10 @@
     });
   });
 </script>
+
+<script>
+// make ajax request to get the book data
+
 
 </html>
 

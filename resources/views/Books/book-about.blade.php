@@ -28,7 +28,14 @@
       </div>
       @foreach ($admins_name as $admin)
       <div class="member-box pb-3">
-        <div class="member-img-box"> <a href="/profile/{{$admin->id}}"><img src="../assets/images/profilePhoto.webp" alt="member image"></a></div>
+        <div class="member-img-box"> <a href="/profile/{{$admin->id}}">  
+          @foreach ($profiles as $profile)
+          @if ($profile->user_id == $admin->id)        
+          <img src="/profile-images/{{$profile->image}}" alt="member image">
+          @endif
+          @endforeach
+
+        </a></div>
         <div class="member-info"> <a class="member-link" href="/profile/{{$admin->id}}">
             <p>{{$admin->name}}</p></a></div>
       </div>

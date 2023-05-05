@@ -19,7 +19,7 @@ class CreateProfilesTable extends Migration
             $table->string('address')->nullable() ;
             $table->string('phone')->nullable() ;
             $table->string('bio')->nullable() ;
-            $table->string('image')->nullable() ;
+            $table->string('image')->nullable()->default('profileImg.png') ;
             $table->string('cover')->nullable() ;
             $table->string('inetrests')->nullable() ;
             $table->timestamps();

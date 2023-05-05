@@ -48,9 +48,11 @@ class SocialLoginController extends Controller
                 ]);
             }
             // create profile for user
-            $user->profile()->create([
-                'user_id' => $user->id,
-            ]) ;
+            if ($user->profile == null){
+                $user->profile()->create([
+                    'user_id' => $user->id,
+                ]) ;
+            }
 
             Auth::login($user);
 

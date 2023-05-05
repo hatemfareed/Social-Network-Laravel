@@ -24,7 +24,8 @@ use App\Http\Controllers\TestLog;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $profile = auth()->user()->profile ;
+    return view('welcome')->with('profile' , $profile);
 })->middleware(['auth'])->name('home');
 
 Route::get('/dashboard', function () {
@@ -71,6 +72,7 @@ Route::middleware(['auth'])->group(function(){
     Route::delete('/post/{post}' , [PostsController::class , 'destroy']);
     Route::post('/post/{post}/like' , [PostsController::class , 'like'])->name('posts.like');
 });
+
 
 Route::middleware(['auth'])->group(function(){
     Route::post('/comments/{post}' , [CommentsController::class , 'store']) ;

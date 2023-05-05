@@ -9,6 +9,7 @@ use App\Models\Like;
 use App\Models\User;
 use App\Models\Group;
 use App\Models\Comment;
+use App\Models\Profile;
 use Illuminate\Support\Facades\Auth;
 
 class PostsController extends Controller
@@ -19,9 +20,10 @@ class PostsController extends Controller
         
         $posts = Post::all();
         $users = User::all();
+        $profiles = Profile::all();
 
         return view('Books.book-page')
-        ->with(['posts' => $posts , 'users'=>$users ,$profile => 'profile']);
+        ->with(['posts' => $posts , 'users'=>$users ,$profile => 'profile' , 'profiles' => $profiles]);
     }
     public function show($id)
     {
@@ -89,12 +91,14 @@ class PostsController extends Controller
                 $posts->likes()->where('user_id', $user->id)->delete();
                 $posts->decrement('likes_count');
                 return redirect()->back();
-            }
-            
+                }
+                
         } catch (\Throwable $th) {
-            return response()->json('The post has not been liked');
+            // return response()->json('The post has not been liked');
+            return redirect()->back()->with('errors', 'The post has not been liked');
         }
-        
-         
+  
     }
+
+    
 }

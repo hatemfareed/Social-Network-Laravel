@@ -17,11 +17,7 @@
           <div class="write-post-layout d-grid">
             <div class="post-writer-img-box">
               <a class="d-flex justify-content-between align-items-center" href="/profile/{{Auth::user()->id}}">
-              @if ($profile->image != null)
               <img class="post-writer-img" src="/profile-images/{{$profile->image}}" alt="post writer img">
-              @else
-              <img class="post-writer-img" src="../assets/images/profilePhoto.webp" alt="post writer img">
-              @endif
             </a>
           </div>
             <div class="write-post-text-area start-post" id="openMrModal"><span>أكتب منشور ...</span></div>
@@ -54,11 +50,9 @@
             <div class="product-details-box">
               <div class="write-post-modal d-flex">
                  <div class="post-writer-img-box"><a class="d-flex justify-content-between align-items-center" href="/profile/{{Auth::user()->id}}">
-                  @if ($profile->image != null)
+                  
                   <img class="post-writer-img" src="/profile-images/{{$profile->image}}" alt="post writer img">
-                  @else
-                  <img class="post-writer-img" src="../assets/images/profileImg.png" alt="post writer img">
-                  @endif
+                  
                 </a></div><a class="post-writer-name" href="/profile/{{Auth::user()->id}}">{{Auth::user()->name}}</a> {{--////////// --}}
               </div>
               <div class="post-content"> 
@@ -83,7 +77,13 @@
         @if ($post->user_id == $user->id)
         <div class="post-info d-flex justify-content-between align-items-center">
           <div class="post-writer-info d-flex">
-            <div class="post-writer-img-box"><a class="d-flex justify-content-between align-items-center" href="/profile/{{$user->id}}"><img class="post-writer-img" src="../assets/images/profilePhoto.webp" alt="post writer img"></a></div>
+            <div class="post-writer-img-box"><a class="d-flex justify-content-between align-items-center" href="/profile/{{$user->id}}">
+              @foreach($profiles as $profile)
+                @if($profile->user_id == $user->id)
+                  <img class="post-writer-img" src="/profile-images/{{$profile->image}}" alt="post writer img">
+                @endif
+                @endforeach
+            </a></div>
             
             <div class="post-writer-name-and-date d-flex flex-column"><a class="post-writer-name" href="/profile/{{$user->id}}">{{$user->name}}</a>
               <div class="post-date"> <span class="day">13</span><span class="month">أذار</span>-<span class="clock">8:56</span><span class="am-pm">م</span></div>
@@ -126,6 +126,7 @@
             <p class="post-text">{{$post->content}}</p>
           </div>
         </div>
+
       <form id="like-form" action="/post/{{$post->id}}/like" method="POST">
         <div class="post-reactions-box"> 
           <div class="reaction-container d-flex align-items-center">
@@ -144,16 +145,13 @@
           </div>
         </div>
       </form>
+
         <div class="comments-box"> 
           
           <div class="write-comment d-grid">
             <div class="comment-writer-img"> 
               <a class="d-flex justify-content-between align-items-center" href="/profile/{{Auth::user()->id}}">
-                @if ($profile->image != null)
               <img src="/profile-images/{{$profile->image}}" alt="comment writer">
-              @else
-              <img src="../assets/images/profileImg.png" alt="comment writer">
-              @endif
             </a>
           </div>
             @if (Auth::user()->groups->contains($group))
@@ -185,7 +183,13 @@
           @foreach ($post->comments as $comment)
           <div class="comment-body"> 
             <div class="posted-comment d-flex">
-              <div class="comment-writer-img"> <a class="d-flex justify-content-between align-items-center" href="/profile/{{$comment->user_id}}"><img src="../assets/images/profilePhoto.webp" alt="comment writer"></a></div>
+              <div class="comment-writer-img"> <a class="d-flex justify-content-between align-items-center" href="/profile/{{$comment->user_id}}">
+                @foreach($profiles as $profile)
+                  @if($profile->user_id == $comment->user_id)
+                    <img src="/profile-images/{{$profile->image}}" alt="comment writer">
+                  @endif
+                  @endforeach
+              </a></div>
               <div class="posted-comment-text-box d-flex flex-column"> <a class="comment-writer-name" href="/profile/{{$comment->user_id}}">{{$comment->user->name}}</a>
                 <p class="comment-text">{{$comment->content}}</p>
               </div>
@@ -232,3 +236,4 @@
   </div>
 </section>
 @endsection
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

@@ -9,6 +9,7 @@ class CategoriesController extends Controller
 {
     public function index()
     {
-        return view('Categories.index');
+        $profile = auth()->user()->profile ;
+        return view('Categories.index')->with('profile' , $profile);
     }
 }

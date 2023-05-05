@@ -34,11 +34,8 @@
               <ul class="navbar-nav mb-2 mb-lg-0 navbar-absolute">
                 <li class="nav-item dropdown bootstrap-things profile-icon-box">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    @if ($profile->image != null)
+                    
                     <img class="profile-icon" src="/profile-images/{{$profile->image}}" alt="profile icon">
-                    @else
-                    <img class="profile-icon" src="../assets/images/profileImg.png" alt="profile icon">
-                    @endif
                     </a>
                   <ul class="dropdown-menu">
                     <li><a class="dropdown-item log-link" href="{{ route('profile') }}"><span>الملف الشخصي </span>
@@ -98,11 +95,7 @@
                 <form action="/store/{{$profile->id}}" method = 'POST' enctype="multipart/form-data" >
                   @csrf
                 <div class="profile-photo-box">
-                  @if ($profile->image != null)
-                   <img src="/profile-images/{{$profile->image}}" alt="Profile Photo">
-                  @else
-                  <img src="../assets/images/profileImg.png" alt="Profile Photo">
-                  @endif
+                   <img src="/profile-images/{{$profile->image}}" alt="Profile Photo">                  
                   <label class="change-profile-photo" for="profilePhoto"> 
                     <input id="profilePhoto" name='profilePhoto' type="file" accept="image/*" onchange="this.form.submit();">
                     <svg> 

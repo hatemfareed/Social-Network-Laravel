@@ -10,22 +10,32 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use App\Models\Comment;
+use App\Models\Profile;
 
 class GroupsController extends Controller
 {
     public function index()
     {
         $groups = Group::all();
+        $profile = auth()->user()->profile;
+        $profiles = Profile::all();
         return view('Groups.index')
-        ->with('groups' , $groups);
+        ->with(['groups' => $groups , 'profile' => $profile , 'profiles' => $profiles]);
     }
+    
     public function show(Group $group)
     {
         $posts = $group->posts;
         $users = $group->users;
         $profile = auth()->user()->profile;
+        $profiles = Profile::all();
         return view('Books.book-page')
-        ->with(['posts' => $posts , 'users'=>$users , 'group'=>$group , 'profile' => $profile]);   
+        ->with(['posts' => $posts ,
+         'users'=>$users ,
+          'group'=>$group ,
+           'profile' => $profile
+           , 'profiles' => $profiles
+        ]);   
     }
 
     public function store(Request $request)
@@ -145,11 +155,17 @@ class GroupsController extends Controller
             array_push($admins_name , $admin_name);
         }
         $number_of_users = $group->users->count();
-
+        $profiles = Profile::all();
         // return response()->json(['data' => $admins_name], 202);
         $profile = auth()->user()->profile;
         return view('books.book-member')
-        ->with(['admins_name' => $admins_name , 'group' => $group , 'members_name' => $members_name , 'number_of_users'=>$number_of_users , 'profile' => $profile ]);
+        ->with(['admins_name' => $admins_name , 'group' => $group ,
+         'members_name' => $members_name ,
+          'number_of_users'=>$number_of_users ,
+           'profile' => $profile  ,
+              'profiles' => $profiles
+
+        ]);
         
     }
     public function about(Group $group)
@@ -165,7 +181,13 @@ class GroupsController extends Controller
         $number_of_members = $group->users->count();
         $users = $group->users;
         $profile = auth()->user()->profile;
+        $profiles = Profile::all();
         return view('books.book-about')
-        ->with(['group' => $group , 'users' => $users , 'admins_name'=>$admins_name , 'members'=>$number_of_members , 'profile' => $profile]);
+        ->with(['group' => $group , 'users' => $users ,
+         'admins_name'=>$admins_name ,
+          'members'=>$number_of_members ,
+           'profile' => $profile ,
+           'profiles' => $profiles
+        ]);
     }
 }

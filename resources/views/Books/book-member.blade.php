@@ -19,7 +19,7 @@
       </div>
       <div class="border-member">
         <div class="member-box b-member">
-          <div class="member-img-box"> <a href="/profile/{{Auth::user()->id}}"><img src="../assets/images/mohammed.jpg" alt="member image"></a></div>
+          <div class="member-img-box"> <a href="/profile/{{Auth::user()->id}}"><img src="/profile-images/{{$profile->image}}" alt="member image"></a></div>
           <div class="member-info"> <a class="member-link" href="/profile/{{Auth::user()->id}}">
               <p>{{Auth::user()->name}}</p></a></div>
           <ul class="post-action-menu">
@@ -52,19 +52,36 @@
         </div>
         @foreach($admins_name as $admin_name)
         <div class="member-box pb-0">
-          <div class="member-img-box"> <a href="/profile/{{$admin_name->id}}"><img src="../assets/images/profilePhoto.webp" alt="member image"></a></div>
+          <div class="member-img-box"> <a href="/profile/{{$admin_name->id}}">
+            @foreach($profiles as $profile)
+            @if($profile->user_id == $admin_name->id)
+            <img src="/profile-images/{{$profile->image}}" alt="member image">
+            
+            @endif
+            @endforeach
+          </a></div>
+          
           <div class="member-info"> <a class="member-link" href="/profile/{{$admin_name->id}}">
               <p>{{$admin_name->name}}</p></a></div>
           <div class="visit-member-profile"> <a href="/profile/{{$admin_name->id}}"><img src="../assets/images/seeProfile.png" alt="see profile"></a></div>
         </div>
         @endforeach
+        
       </div>
       @foreach($members_name as $member)
       <div class="member-box">
-        <div class="member-img-box"><a href="/profile/{{$member->id}}"><img src="../assets/images/profileImg.png" alt="member image"></a></div>
+        <div class="member-img-box"><a href="/profile/{{$member->id}}">
+          @foreach($profiles as $profile)
+          @if($profile->user_id == $member->id)
+          <img src="/profile-images/{{$profile->image}}" alt="member image">
+          @endif
+          @endforeach
+        </a></div>
         <div class="member-info"> <a class="member-link" href="/profile/{{$member->id}}">
             <p>{{$member->name}}</p></a></div>
-        <div class="visit-member-profile"> <a href="/profile/{{$member->id}}"><img src="../assets/images/seeProfile.png" alt="see profile"></a></div>
+        <div class="visit-member-profile"> <a href="/profile/{{$member->id}}">
+          <img src="../assets/images/seeProfile.png" alt="see profile">
+        </a></div>
       </div>
       @endforeach
     </div>

@@ -24,7 +24,7 @@
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 main-list">
                       <li class="nav-item"><a class="nav-link active" href="/">الرئيسة</a></li>
-                      <li class="nav-item"><a class="nav-link" href="../../categories.html">التصنيفات</a></li>
+                      <li class="nav-item"><a class="nav-link" href="{{route('categories.index')}}">التصنيفات</a></li>
                       <li class="nav-item"><a class="nav-link" href="../../about.html">من نحن</a></li>
                       <li class="nav-item"><a class="nav-link" href="../../contactUs.html">تواصل معنا</a></li>
                     </ul>
@@ -32,7 +32,7 @@
                 </div>
               </nav>
               <ul class="navbar-nav mb-2 mb-lg-0 navbar-absolute">
-                <li class="nav-item dropdown bootstrap-things profile-icon-box"><a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img class="profile-icon" src="/assets/images/mohammed.jpg" alt="profile icon"></a>
+                <li class="nav-item dropdown bootstrap-things profile-icon-box"><a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img class="profile-icon" src="/profile-images/{{$profile->image}}" alt="profile icon"></a>
                   <ul class="dropdown-menu">
                     <li><a class="dropdown-item log-link" href="profile/{{Auth::user()->id}}"><span>الملف الشخصي </span>
                         <svg>
